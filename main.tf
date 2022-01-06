@@ -58,7 +58,8 @@ resource "aws_security_group" "sg-ssh" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = []
+    description = ""
   }
   egress {
     from_port   = 0
@@ -74,9 +75,10 @@ resource "aws_security_group" "sg-ssh" {
 
 resource "aws_security_group_rule" "same_sg" {
   type              = "ingress"
-  from_port         = -1
-  to_port           = -1
+  from_port         = 0
+  to_port           = 0
   protocol          = "-1"
+  prefix_list_ids		= []
   security_group_id = aws_security_group.sg-ssh.id
   source_security_group_id = aws_security_group.sg-ssh.id
 }
